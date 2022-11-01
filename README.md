@@ -46,7 +46,7 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
     
  + (Check the status of your node)
 
-        niburu status 2>&1 | jq .SyncInfo
+        nibid status 2>&1 | jq .SyncInfo
       
       
 ### Open ports and active the firewall
