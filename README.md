@@ -42,11 +42,11 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
  
 ### Post installation
 
-      source $HOME/.bash_profile
+        source $HOME/.bash_profile
     
  + (Check the status of your node)
 
-      seid status 2>&1 | jq .SyncInfo
+        seid status 2>&1 | jq .SyncInfo
       
       
 ### Open ports and active the firewall
@@ -185,11 +185,11 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
      
 ### Unjail validator
 
-  nibid tx slashing unjail \
-  --broadcast-mode=block \
-  --from=$WALLET \
-  --chain-id=$NIBIRU_CHAIN_ID \
-  --gas=auto     
+      nibid tx slashing unjail \
+      --broadcast-mode=block \
+      --from=$WALLET \
+      --chain-id=$NIBIRU_CHAIN_ID \
+      --gas=auto     
  
  
 ### Delete node
