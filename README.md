@@ -140,7 +140,7 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 ### Service management
   + Check logs
 
-     journalctl -fu nibid -o cat
+        journalctl -fu nibid -o cat
      
      
 ### Start service
