@@ -48,7 +48,11 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 
         nibid status 2>&1 | jq .SyncInfo
       
-      
+ +   Check logs
+ 
+          journalctl -fu terpd -o cat   
+       
+       
 ### Open ports and active the firewall
  
     sudo ufw default allow outgoing
