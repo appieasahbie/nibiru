@@ -50,7 +50,7 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
       
  +   Check logs
  
-          journalctl -fu terpd -o cat   
+          journalctl -fu nibid -o cat   
        
        
 ### Open ports and active the firewall
