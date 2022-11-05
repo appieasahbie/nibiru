@@ -44,11 +44,11 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 
         source $HOME/.bash_profile
     
- + (Check the status of your node)
+ + (Check the status of your node if is it true type Cltr+c)
 
         nibid status 2>&1 | jq .SyncInfo
       
- +   Check logs
+ +   Check logs ( to stop checking logs Cltr+c)
  
           journalctl -fu nibid -o cat   
        
