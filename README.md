@@ -210,13 +210,13 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
  
 ### Delete node
 
-  sudo systemctl stop nibid
-  sudo systemctl disable nibid
-  sudo rm /etc/systemd/system/nibi* -rf
-  sudo rm $(which nibid) -rf
-  sudo rm $HOME/.nibid* -rf
-  sudo rm $HOME/nibiru -rf
-  sed -i '/NIBIRU_/d' ~/.bash_profile
+     sudo systemctl stop nibid
+     sudo systemctl disable nibid
+     sudo rm /etc/systemd/system/nibi* -rf
+     sudo rm $(which nibid) -rf
+     sudo rm $HOME/.nibid* -rf
+     sudo rm $HOME/nibiru -rf
+     sed -i '/NIBIRU_/d' ~/.bash_profile
  
  
  [buy me cup of coffee ](https://www.paypal.com/paypalme/AbdelAkridi?country.x=NL&locale.x=en_US)
