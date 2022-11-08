@@ -63,24 +63,22 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
     sudo ufw enable
  
  
- ### (OPTIONAL) State-Sync provided by PPNV Service
+ ### (OPTIONAL) State-Sync provided by Nodejumber
 
-    SNAP_RPC="http://rpc.nibiru.ppnv.space:10657"
-    LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height)
-    BLOCK_HEIGHT=$((LATEST_HEIGHT - 1000))
-    TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
-    echo $LATEST_HEIGHT $BLOCK_HEIGHT $TRUST_HASH
-    #if there are no errors, then continue
-    sudo systemctl stop nibid
-    nibid tendermint unsafe-reset-all --home $HOME/.nibid --keep-addr-book
-    peers="ff597c3eea5fe832825586cce4ed00cb7798d4b5@rpc.nibiru.ppnv.space:10656"
-    sed -i 's|^persistent_peers *=.*|persistent_peers = "'$peers'"|' $HOME/.nibid/config/config.toml
-    sed -i -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
-    s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ; \
-    s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ; \
-    s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"|" $HOME/.nibid/config/config.toml
-    sudo systemctl restart nibid
-    sudo journalctl -u nibid -f --no-hostname -o cat
+      sudo systemctl stop nibid
+
+     cp $HOME/.nibid/data/priv_validator_state.json $HOME/.nibid/priv_validator_state.json.backup
+     nibid tendermint unsafe-reset-all --home $HOME/.nibid --keep-addr-book
+
+     rm -rf $HOME/.nibid/data 
+
+     SNAP_NAME=$(curl -s https://snapshots3-testnet.nodejumper.io/nibiru-testnet/ | egrep -o ">nibiru-testnet-1.*\.tar.lz4" | tr -d ">")
+     curl https://snapshots3-testnet.nodejumper.io/nibiru-testnet/${SNAP_NAME} | lz4 -dc - | tar -xf - -C $HOME/.nibid
+
+     mv $HOME/.nibid/priv_validator_state.json.backup $HOME/.nibid/data/priv_validator_state.json
+
+     sudo systemctl restart nibid
+     sudo journalctl -u nibid -f --no-hostname -o cat
     
     
 
