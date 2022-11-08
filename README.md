@@ -135,15 +135,18 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
  
  
       nibid tx staking create-validator \
-      --amount 2000000unibi \
-      --from $WALLET \
-      --commission-max-change-rate "0.01" \
-      --commission-max-rate "0.2" \
-      --commission-rate "0.07" \
+      --amount 10000000unibi \
+      --commission-max-change-rate "0.1" \
+      --commission-max-rate "0.20" \
+      --commission-rate "0.1" \
       --min-self-delegation "1" \
-      --pubkey  $(nibid tendermint show-validator) \
-      --moniker $NODENAME \
-      --chain-id $NIBIRU_CHAIN_ID
+      --details "put your validator description there" \
+      --pubkey=$(nibid tendermint show-validator) \
+      --moniker <your_moniker> \
+      --chain-id nibiru-testnet-1 \
+      --gas-prices 0.025unibi \
+      --from <key-name>
+
  
  
 
