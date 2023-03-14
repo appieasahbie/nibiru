@@ -15,58 +15,33 @@ echo -e "\e[0m"
 
 
 
-sleep 2
+read -r -p "Enter node moniker: " NODE_MONIKER
 
-# set vars
-if [ ! $NODENAME ]; then
-	read -p "Enter node name: " NODENAME
-	echo 'export NODENAME='$NODENAME >> $HOME/.bash_profile
-fi
-NIBIRU_PORT=39
-if [ ! $WALLET ]; then
-	echo "export WALLET=wallet" >> $HOME/.bash_profile
-fi
-echo "export NIBIRU_CHAIN_ID=nibiru-testnet-1" >> $HOME/.bash_profile
-echo "export NIBIRU_PORT=${NIBIRU_PORT}" >> $HOME/.bash_profile
-source $HOME/.bash_profile
+CHAIN_ID="nibiru-itn-1"
+CHAIN_DENOM="unibi"
+BINARY_NAME="nibid"
+BINARY_VERSION_TAG="v0.19.2"
+CHEAT_SHEET="https://github.com/appieasahbie/nibiru"
 
-echo '================================================='
-echo -e "Your node name: \e[1m\e[32m$NODENAME\e[0m"
-echo -e "Your wallet name: \e[1m\e[32m$WALLET\e[0m"
-echo -e "Your chain name: \e[1m\e[32m$NIBIRU_CHAIN_ID\e[0m"
-echo -e "Your port: \e[1m\e[32m$NIBIRU_PORT\e[0m"
-echo '================================================='
-sleep 2
+printLine
+echo -e "Node moniker:       ${CYAN}$NODE_MONIKER${NC}"
+echo -e "Chain id:           ${CYAN}$CHAIN_ID${NC}"
+echo -e "Chain demon:        ${CYAN}$CHAIN_DENOM${NC}"
+echo -e "Binary version tag: ${CYAN}$BINARY_VERSION_TAG${NC}"
+printLine
+sleep 1
 
-echo -e "\e[1m\e[32m1. Updating packages... \e[0m" && sleep 1
-# update
-sudo apt update && sudo apt upgrade -y
+source <(curl -s https://raw.githubusercontent.com/nodejumper-org/cosmos-scripts/master/utils/dependencies_install.sh)
 
-echo -e "\e[1m\e[32m2. Installing dependencies... \e[0m" && sleep 1
-# packages
-sudo apt install curl build-essential git wget jq make gcc tmux chrony -y
+printCyan "4. Building binaries..." && sleep 1
 
-# install go
-rm -rf $HOME/go
-rm -rf /usr/local/go
-cd ~
-curl https://dl.google.com/go/go1.19.4.linux-amd64.tar.gz | sudo tar -C/usr/local -zxvf -
-cat <<'EOF' >>$HOME/.profile
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GO111MODULE=on
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-EOF
-source $HOME/.profile
-go version
-
-echo -e "\e[1m\e[32m3. Downloading and building binaries... \e[0m" && sleep 1
-# download binary
-cd $HOME && rm -rf nibiru
+cd || return
+rm -rf nibiru
 git clone https://github.com/NibiruChain/nibiru
 cd nibiru || return
 git checkout v0.19.2
-make install # v0.19.2
+make install
+nibid version # v0.19.2
 
 nibid config keyring-backend test
 nibid config chain-id $CHAIN_ID
