@@ -33,7 +33,6 @@ echo -e "Binary version tag: ${CYAN}$BINARY_VERSION_TAG${NC}"
 printLine
 sleep 1
 
-source <(curl -s https://raw.githubusercontent.com/appieasahbie/nibiru/main/nibiru.sh && chmod +x nibiru.sh && ./nibiru.sh)
 
 printCyan "4. Building binaries..." && sleep 1
 
