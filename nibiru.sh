@@ -68,7 +68,6 @@ cd nibiru || return
 git checkout v0.19.2
 make install # v0.19.2
 
-# config
 nibid config keyring-backend test
 nibid config chain-id $CHAIN_ID
 nibid init "$NODE_MONIKER" --chain-id $CHAIN_ID
