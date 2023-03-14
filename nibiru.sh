@@ -23,7 +23,7 @@ CHAIN_ID="nibiru-itn-1"
 CHAIN_DENOM="unibi"
 BINARY_NAME="nibid"
 BINARY_VERSION_TAG="v0.19.2"
-CHEAT_SHEET="https://nodejumper.io/nibiru-testnet/cheat-sheet"
+CHEAT_SHEET="https://github.com/appieasahbie/nibiru"
 
 printLine
 echo -e "Node moniker:       ${CYAN}$NODE_MONIKER${NC}"
