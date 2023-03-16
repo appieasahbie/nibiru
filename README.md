@@ -65,34 +65,35 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
  
  ### (OPTIONAL do not run it if your node is fully synced ) State-Sync provided by Nodejumber
 
-      sudo systemctl stop nibid
+        sudo systemctl stop nibid
 
-     cp $HOME/.nibid/data/priv_validator_state.json $HOME/.nibid/priv_validator_state.json.backup
-     nibid tendermint unsafe-reset-all --home $HOME/.nibid --keep-addr-book
+        cp $HOME/.nibid/data/priv_validator_state.json $HOME/.nibid/priv_validator_state.json.backup
+        nibid tendermint unsafe-reset-all --home $HOME/.nibid --keep-addr-book
 
-     rm -rf $HOME/.nibid/data 
+        SNAP_RPC="https://nibiru-testnet.nodejumper.io:443"
 
-     SNAP_NAME=$(curl -s https://snapshots3-testnet.nodejumper.io/nibiru-testnet/ | egrep -o ">nibiru-testnet-1.*\.tar.lz4" | tr -d ">")
-     curl https://snapshots3-testnet.nodejumper.io/nibiru-testnet/${SNAP_NAME} | lz4 -dc - | tar -xf - -C $HOME/.nibid
+        LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height)
+        BLOCK_HEIGHT=$((LATEST_HEIGHT - 2000))
+        TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
 
-     mv $HOME/.nibid/priv_validator_state.json.backup $HOME/.nibid/data/priv_validator_state.json
+        echo $LATEST_HEIGHT $BLOCK_HEIGHT $TRUST_HASH
 
-     sudo systemctl restart nibid
-     sudo journalctl -u nibid -f --no-hostname -o cat
+        PEERS="a1b96d1437fb82d3d77823ecbd565c6268f06e34@nibiru-testnet.nodejumper.io:27656"
+        sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.nibid/config/config.toml
+
+        sed -i 's|^enable *=.*|enable = true|' $HOME/.nibid/config/config.toml
+        sed -i 's|^rpc_servers *=.*|rpc_servers = "'$SNAP_RPC,$SNAP_RPC'"|' $HOME/.nibid/config/config.toml
+        sed -i 's|^trust_height *=.*|trust_height = '$BLOCK_HEIGHT'|' $HOME/.nibid/config/config.toml
+        sed -i 's|^trust_hash *=.*|trust_hash = "'$TRUST_HASH'"|' $HOME/.nibid/config/config.toml
+
+        mv $HOME/.nibid/priv_validator_state.json.backup $HOME/.nibid/data/priv_validator_state.json
+
+        curl -s https://snapshots2-testnet.nodejumper.io/nibiru-testnet/wasm.lz4 | lz4 -dc - | tar -xf - -C $HOME/.nibid/data
+
+        sudo systemctl restart nibid
+        sudo journalctl -u nibid -f --no-hostname -o cat
     
     
-
-### Update block time parameters
-
-    CONFIG_TOML="$HOME/.nibid/config/config.toml"
-    sed -i 's/timeout_propose =.*/timeout_propose = "100ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_propose_delta =.*/timeout_propose_delta = "500ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_prevote =.*/timeout_prevote = "100ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_prevote_delta =.*/timeout_prevote_delta = "500ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_precommit =.*/timeout_precommit = "100ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_precommit_delta =.*/timeout_precommit_delta = "500ms"/g' $CONFIG_TOML
-    sed -i 's/timeout_commit =.*/timeout_commit = "1s"/g' $CONFIG_TOML
-    sed -i 's/skip_timeout_commit =.*/skip_timeout_commit = false/g' $CONFIG_TOML
 
 
 ### Create wallet
