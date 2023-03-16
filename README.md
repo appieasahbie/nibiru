@@ -100,12 +100,12 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 
  + (Please save all keys on your notepad)
 
-     nibid keys add $WALLET
+        nibid keys add $WALLET
      
      
 ### To recover your old wallet use this command
 
-     nibid keys add $WALLET --recover
+        nibid keys add $WALLET --recover
  
  
 ### To get current list of wallets
