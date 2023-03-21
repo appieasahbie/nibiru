@@ -63,7 +63,7 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
     sudo ufw enable
  
  
- ### (OPTIONAL do not run it if your node is fully synced ) State-Sync provided by Nodejumber
+ ### (OPTIONAL do not run it if your node is fully synced ) State-Sync provided by Nodejumber special thanks
 
         sudo systemctl stop nibid
 
