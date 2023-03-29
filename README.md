@@ -194,11 +194,11 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 
 ### Delegate stake
 
-     nibid tx staking delegate $NIBIRU_VALOPER_ADDRESS 10000000unibi --from=$WALLET --chain-id=$NIBIRU_CHAIN_ID --gas=auto
+     nibid tx staking delegate $NIBIRU_VALOPER_ADDRESS 10000000unibi --from=Yourwalletname --chain-id=nibiru-itn-1 --gas=auto
      
 ### Redelegate stake from validator to another validator
 
-     nibid tx staking redelegate <srcValidatorAddress> <destValidatorAddress> 10000000unibi --from=$WALLET --chain-id=$NIBIRU_CHAIN_ID --gas=auto
+     nibid tx staking redelegate <srcValidatorAddress> <destValidatorAddress> 10000000unibi --from=Yourwalletname --chain-id=nibiru-itn-1 --gas=auto
      
      
 ### Unjail validator
